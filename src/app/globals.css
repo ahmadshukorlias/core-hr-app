@@ -1,6 +1,47 @@
 @import "tailwindcss";
 
 :root {
+  --color-deep-teal: #0E4A56;
+  --color-ocean: #3D6E93;
+  --color-aqua: #4FA3A0;
+  --color-ink: #1E293B;
+  --color-slate: #5B6670;
+  --color-bg: #F7F9FA;
+  --color-border: #E3E8EB;
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+/* Smooth transitions on every interactive element, globally */
+a, button, input, select, textarea {
+  transition: color 0.2s ease-out, background-color 0.2s ease-out,
+              border-color 0.2s ease-out, box-shadow 0.2s ease-out,
+              transform 0.15s ease-out;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* Signature gradient accent — used sparingly for active states + section markers */
+.accent-bar {
+  background: linear-gradient(90deg, var(--color-deep-teal), var(--color-aqua));
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+@import "tailwindcss";
+
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
