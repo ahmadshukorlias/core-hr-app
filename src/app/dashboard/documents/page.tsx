@@ -72,7 +72,7 @@ export default async function DocumentsPage({
                 <td className="py-2">{doc.file_name}</td>
                 <td className="py-2">{new Date(doc.uploaded_at).toLocaleDateString()}</td>
                 <td className="py-2">
-                  <div className="flex gap-3">
+                  <div className="flex flex-col gap-3 md:flex-row">
                     <a
                       href={`/dashboard/documents/${doc.id}/download`}
                       className="text-xs text-blue-600 hover:underline"

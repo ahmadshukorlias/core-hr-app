@@ -2,6 +2,14 @@ import { getProfile } from '@/lib/auth/getProfile'
 import { createClient } from '@/lib/supabase/server'
 import { clockIn, clockOut, upsertAttendance } from './actions'
 
+function formatDuration(clockIn: string | null, clockOut: string | null) {
+  if (!clockIn || !clockOut) return '—'
+  const ms = new Date(clockOut).getTime() - new Date(clockIn).getTime()
+  const hours = Math.floor(ms / 3600000)
+  const minutes = Math.round((ms % 3600000) / 60000)
+  return `${hours}h ${minutes}m`
+}
+
 function todayStr() {
   return new Date().toISOString().split('T')[0]
 }
@@ -98,6 +106,7 @@ export default async function AttendancePage({
               <th className="py-2">Clock In</th>
               <th className="py-2">Clock Out</th>
               <th className="py-2">Status</th>
+              <th className="py-2">Hours</th>
             </tr>
           </thead>
           <tbody>
@@ -107,6 +116,7 @@ export default async function AttendancePage({
                 <td className="py-2">{formatTime(rec.clock_in)}</td>
                 <td className="py-2">{formatTime(rec.clock_out)}</td>
                 <td className="py-2 capitalize">{rec.status}</td>
+                <td className="py-2">{formatDuration(rec.clock_in, rec.clock_out)}</td>
               </tr>
             ))}
           </tbody>
@@ -128,6 +138,7 @@ export default async function AttendancePage({
                   <th className="py-2">Clock In</th>
                   <th className="py-2">Clock Out</th>
                   <th className="py-2">Status</th>
+                  <th className="py-2">Hours</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,6 +148,7 @@ export default async function AttendancePage({
                     <td className="py-2">{formatTime(rec.clock_in)}</td>
                     <td className="py-2">{formatTime(rec.clock_out)}</td>
                     <td className="py-2 capitalize">{rec.status}</td>
+                    <td className="py-2">{formatDuration(rec.clock_in, rec.clock_out)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -157,7 +169,7 @@ export default async function AttendancePage({
                   ))}
                 </select>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-3 md:flex-row">
                 <div className="flex-1">
                   <label className="block text-sm font-medium text-gray-700">Date</label>
                   <input name="date" type="date" required defaultValue={today} className="mt-1 w-full rounded border border-gray-300 p-2 text-sm" />

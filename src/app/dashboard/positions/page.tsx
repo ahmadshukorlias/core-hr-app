@@ -1,13 +1,14 @@
 import { getProfile } from '@/lib/auth/getProfile'
 import { createClient } from '@/lib/supabase/server'
 import { createPosition, updatePosition, deletePosition } from './actions'
+import { requireRole } from '@/lib/auth/requireRole'
 
 export default async function PositionsPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>
 }) {
-  const profile = await getProfile()
+  const profile = await requireRole(['admin', 'hr'])
   const { error } = await searchParams
   const canManage = profile.role === 'admin' || profile.role === 'hr'
 

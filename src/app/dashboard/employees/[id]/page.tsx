@@ -32,7 +32,9 @@ export default async function EmployeeDetailPage({
 
   return (
     <div className="max-w-lg">
-      <h1 className="text-2xl font-bold">{employee.full_name}</h1>
+      <h1 className="font-display text-2xl font-bold text-[#1E293B]">
+        {isSelf ? 'My Profile' : employee.full_name}
+      </h1>
       <p className="text-sm text-gray-500">{employee.email}</p>
 
       {error && (
